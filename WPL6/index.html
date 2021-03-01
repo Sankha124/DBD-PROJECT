@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+  <head>
+    <title>Geolocation</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+   <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBcWhzcS0fRqtT4czOHzFBfbw4PqiIhnk4&libraries=places&callback=initMap"
+      defer
+    ></script>
+    <style type="text/css">
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+      }
+
+      /* Optional: Makes the sample page fill the window. */
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+
+      .custom-map-control-button {
+        appearance: button;
+        background-color: #fff;
+        border: 0;
+        border-radius: 2px;
+        box-shadow: 0 1px 4px -1px rgba(0, 0, 0, 0.3);
+        cursor: pointer;
+        margin: 10px;
+        padding: 0 0.5em;
+        height: 40px;
+        font: 400 18px Roboto, Arial, sans-serif;
+        overflow: hidden;
+      }
+      .custom-map-control-button:hover {
+        background: #ebebeb;
+      }
+      #floating-panel {
+        position: absolute;
+        top: 10px;
+        left: 25%;
+        z-index: 5;
+        background-color: #fff;
+        padding: 5px;
+        border: 1px solid #999;
+        text-align: center;
+        font-family: "Roboto", "sans-serif";
+        line-height: 30px;
+        padding-left: 10px;
+      }
+    </style>
+    <script>
+      // Note: This example requires that you consent to location sharing when
+      // prompted by your browser. If you see the error "The Geolocation service
+      // failed.", it means you probably did not give permission for the browser to
+      // locate you.
+      
+
+      function initMap() {
+        const map = new google.maps.Map(document.getElementById("map"), {
+          center: { lat: 32.779167, lng: -96.808891 },
+          zoom: 15,
+        });
+        const geocoder = new google.maps.Geocoder();
+        document.getElementById("submit").addEventListener("click", () => {
+          geocodeAddress(geocoder, map);
+        });
+      }
+
+      function geocodeAddress(geocoder, resultsMap) {
+        const address = document.getElementById("address").value;
+        geocoder.geocode({address: address },(results, status) => {
+          if (status === "OK") {
+            resultsMap.setCenter(results[0].geometry.location);
+            new google.maps.Marker({
+              map :resultsMap,
+              position: results[0].geometry.location,
+            });
+            var request = {
+            location: results[0].geometry.location,
+            radius: '1500',
+            types: ['pharmacy'],
+        };
+
+          service = new google.maps.places.PlacesService(resultsMap);
+          service.nearbySearch(request, callback);
+          function callback(results, status) {
+          if (status === google.maps.places.PlacesServiceStatus.OK) {
+            for (var i = 0; i < results.length; i++) {
+
+              new google.maps.Marker({
+                map: resultsMap,
+                title: results[i].name,
+                position: results[i].geometry.location,
+              });
+        }
+      }
+    }
+          }else{
+            alert("geoc not succ");
+          }
+
+
+        });
+        
+      }
+
+
+        
+        
+    </script>
+      
+      
+  </head>
+
+   <div id="floating-panel">
+      <input id="address" type="textbox" value="howrah, India" />
+      <input id="submit" type="button" value="Geocode" />
+    </div>
+    <div id="map"></div>
+  </body>
+  
+</html>
