@@ -1,0 +1,58 @@
+html
+{
+	scroll-behavior: smooth;
+}
+
+.col-md-8{
+	padding-left: 10px;
+	background-color: #51e2f5;
+	color: black;
+}
+
+.col-md-2{
+	
+	background-image: linear-gradient(to top, #51e2f5, white);
+}
+
+
+
+.page
+{
+	text-align: right;
+    text-transform: uppercase;
+    background-color: #696969;
+    line-height: 20px;
+    padding: 20px;
+    width: 100%;
+}
+
+#nav-bar
+{
+	top: 0;
+	z-index: 10;
+
+}
+
+#left
+{
+	margin-left: 10px;
+	padding-top: 30px;
+	padding-left: 30px;
+	font-family: sans-serif;
+}
+
+img{
+	float: left;
+	padding: 10px;
+
+}
+
+.wrapper {
+  padding: 10px; 
+}
+.wrapper::after {
+  content: "";
+  clear: both;
+  display: block;
+}
+
